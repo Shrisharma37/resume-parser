@@ -13,9 +13,10 @@ class Resume:
     linkedin: str | None = None
     github: str | None = None
     skills: list[str] = field(default_factory=list)
+    languages: list[str] = field(default_factory=list)
     sections: dict[str, str] = field(default_factory=dict)
     filename: str = "resume.pdf"
-    parser_version: str = "1.0"
+    parser_version: str = "1.1"
     status: str = "completed"
     created_at: str | None = None
     parsed_at: str | None = None
@@ -38,10 +39,11 @@ class Resume:
                 "location": None,
                 "linkedin_url": self.linkedin,
                 "github_url": self.github,
-                "portfolio_url": None,
+                "portfolio_url": self._find_portfolio(),
                 "summary": self.sections.get("summary") or None,
             },
             "education": self._section_entries("education"),
+            "languages": list(self.languages),
             "technical_skills": {"technologies": list(self.skills)},
             "projects": self._section_entries("projects"),
             "experience": self._section_entries("experience"),
@@ -62,6 +64,15 @@ class Resume:
             },
         }
 
+    def _find_portfolio(self) -> str | None:
+        text = "\n".join(self.sections.values())
+        match = re.search(r"https?://[^\s]+", text, re.IGNORECASE)
+        if match:
+            url = match.group(0).rstrip(".,;)")
+            if not any(site in url.casefold() for site in ("linkedin.com", "github.com")):
+                return url
+        return None
+
     def _section_entries(self, section: str) -> list[str]:
         content = self.sections.get(section, "").strip()
         return [
@@ -80,6 +91,7 @@ class Resume:
             linkedin=data.get("linkedin"),
             github=data.get("github"),
             skills=list(data.get("skills", [])),
+            languages=list(data.get("languages", [])),
             sections=dict(data.get("sections", {})),
             filename=data.get("filename", "resume.pdf"),
             parser_version=data.get("parser_version", "1.0"),

@@ -74,6 +74,18 @@ if resume_data:
         with profile_columns[index % 2]:
             st.write(f"**{label}:** {value or 'Not found'}")
 
+    st.subheader("Profile summary")
+    if resume.sections.get("summary"):
+        st.write(resume.sections["summary"])
+    else:
+        st.info("No profile summary section was detected.")
+
+    st.subheader("Languages")
+    if resume.languages:
+        st.write(", ".join(resume.languages))
+    else:
+        st.info("No languages were detected under a Languages section.")
+
     st.subheader("Skills")
     if resume.skills:
         st.write(", ".join(resume.skills))

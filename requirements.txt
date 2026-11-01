@@ -1,2 +1,2 @@
 streamlit>=1.57.0
-pypdf>=5.0.0
+PyMuPDF>=1.24.0
