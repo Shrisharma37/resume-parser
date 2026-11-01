@@ -25,10 +25,10 @@ Open the local URL printed by Streamlit, upload a PDF (up to 10 MB), and choose
 **Analyze resume**. Paste a job description in the same form to see a
 catalog-based skill comparison. **Download parsed data** exports JSON with
 `profile`, `education`, `technical_skills`, `projects`, `experience`,
-`certifications`, `achievements`, and `metadata` fields. The current parser
-fills recognized contact details, summary, and catalogued skills; structured
-education, project, and experience entries remain empty because those details
-are not extracted yet.
+`certifications`, `achievements`, and `metadata` fields. The section arrays
+contain text blocks captured from recognized resume headings; they are not yet
+normalized into structured school, role, or project fields. `metadata` contains
+parser-generated file and processing details.
 
 ## Deploy on Streamlit Community Cloud
 
@@ -54,8 +54,10 @@ unless you have an appropriate privacy and access-control setup.
 
 The parser uses selectable PDF text; it does not perform OCR. Its contact,
 section, and skill detection is heuristic and should be checked against the
-original resume. Job match percentages represent only the overlap of recognized
-catalogued skills, not a hiring recommendation.
+original resume. Exported education, project, experience, certification, and
+achievement entries preserve their section text as blocks. Job match
+percentages represent only the overlap of recognized catalogued skills, not a
+hiring recommendation.
 
 ## Privacy
 

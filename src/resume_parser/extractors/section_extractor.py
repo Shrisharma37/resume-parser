@@ -19,11 +19,28 @@ SECTION_ALIASES = {
         "employment history",
         "work history",
     },
-    "education": {"education", "academic background", "academics"},
+    "education": {
+        "education",
+        "academic background",
+        "academic qualification",
+        "academic qualifications",
+        "academics",
+        "educational qualifications",
+    },
     "skills": {"skills", "technical skills", "core competencies", "competencies"},
-    "projects": {"projects", "personal projects", "selected projects"},
-    "certifications": {"certifications", "certificates", "licenses and certifications"},
-    "awards": {"awards", "honors", "achievements"},
+    "projects": {
+        "projects",
+        "personal projects",
+        "project experience",
+        "selected projects",
+    },
+    "certifications": {
+        "certification",
+        "certifications",
+        "certificates",
+        "licenses and certifications",
+    },
+    "awards": {"achievement", "achievements", "awards", "honors"},
     "languages": {"languages", "language skills"},
 }
 HEADING_LOOKUP = {

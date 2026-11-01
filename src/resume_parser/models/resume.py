@@ -1,6 +1,7 @@
 """Parsed resume data model."""
 
 from dataclasses import asdict, dataclass, field
+import re
 from typing import Any
 
 
@@ -40,12 +41,12 @@ class Resume:
                 "portfolio_url": None,
                 "summary": self.sections.get("summary") or None,
             },
-            "education": [],
+            "education": self._section_entries("education"),
             "technical_skills": {"technologies": list(self.skills)},
-            "projects": [],
-            "experience": [],
-            "certifications": [],
-            "achievements": [],
+            "projects": self._section_entries("projects"),
+            "experience": self._section_entries("experience"),
+            "certifications": self._section_entries("certifications"),
+            "achievements": self._section_entries("awards"),
             "metadata": {
                 "parser_version": self.parser_version,
                 "status": self.status,
@@ -60,6 +61,14 @@ class Resume:
                 "is_scanned_pdf": self.is_scanned_pdf,
             },
         }
+
+    def _section_entries(self, section: str) -> list[str]:
+        content = self.sections.get(section, "").strip()
+        return [
+            entry.strip()
+            for entry in re.split(r"\n\s*\n", content)
+            if entry.strip()
+        ]
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "Resume":

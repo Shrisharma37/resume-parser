@@ -22,6 +22,22 @@ class SectionExtractorTests(unittest.TestCase):
             },
         )
 
+    def test_recognizes_common_education_and_project_headings(self):
+        text = (
+            "Academic Qualifications\nBSc Computer Science\n"
+            "Project Experience\nResume Parser\n"
+            "Certification\nPython Certificate"
+        )
+
+        self.assertEqual(
+            extract_sections(text),
+            {
+                "education": "BSc Computer Science",
+                "projects": "Resume Parser",
+                "certifications": "Python Certificate",
+            },
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

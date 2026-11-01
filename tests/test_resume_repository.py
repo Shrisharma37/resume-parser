@@ -69,6 +69,31 @@ class ResumeRepositoryTests(unittest.TestCase):
             },
         )
 
+    def test_structured_export_includes_extracted_sections(self):
+        resume = Resume(
+            sections={
+                "education": "BSc Computer Science\nUniversity of Example",
+                "projects": "Resume Parser\nBuilt a parser.",
+                "experience": "Software Engineer\nExample Company",
+                "certifications": "Python Certificate",
+                "awards": "Dean's List",
+            }
+        )
+
+        exported = resume.to_export_dict()
+
+        self.assertEqual(
+            exported["education"], ["BSc Computer Science\nUniversity of Example"]
+        )
+        self.assertEqual(
+            exported["projects"], ["Resume Parser\nBuilt a parser."]
+        )
+        self.assertEqual(
+            exported["experience"], ["Software Engineer\nExample Company"]
+        )
+        self.assertEqual(exported["certifications"], ["Python Certificate"])
+        self.assertEqual(exported["achievements"], ["Dean's List"])
+
 
 if __name__ == "__main__":
     unittest.main()
